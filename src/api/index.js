@@ -1,3 +1,5 @@
+import { queryString as qs } from 'query-string'
+
 const DOMAIN = 'http://localhost:3001/'
 
 class ApiCall {
@@ -17,12 +19,24 @@ class ApiCall {
     }
 
     async get(path, searchParams) {
-        //
+        return await this.perform(`${path}/${qs.stringify(searchParams)}`)
     }
 
-    async post() {}
+    async post(path, payload) {
+        return this.perform(path, payload, {
+            method: 'POST',
+        })
+    }
 
-    async put() {}
+    async put(path, payload) {
+        return this.perform(path, payload, {
+            method: 'PUT',
+        })
+    }
 
-    async delete() {}
+    async delete(path) {
+        return this.perform(path, {
+            method: 'DELETE',
+        })
+    }
 }
