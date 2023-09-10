@@ -1,6 +1,6 @@
 import { queryString as qs } from 'query-string'
 
-const DOMAIN = 'http://localhost:3001/'
+export const DOMAIN = 'http://localhost:3001/'
 
 class ApiCall {
     constructor(domain) {
@@ -40,3 +40,5 @@ class ApiCall {
         })
     }
 }
+
+export default ApiCall(DOMAIN)
