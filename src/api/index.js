@@ -1,6 +1,6 @@
-import { queryString as qs } from 'query-string'
+import queryString from 'query-string'
 
-export const DOMAIN = 'http://localhost:3001/'
+export const DOMAIN = 'http://localhost:3001'
 
 class ApiCall {
     constructor(domain) {
@@ -12,33 +12,35 @@ class ApiCall {
             ...config,
             body: JSON.stringify(data),
             headers: {
-                'content-type': 'application/json',
+                'Content-Type': 'application/json',
             },
         })
         return await request.json()
     }
 
     async get(path, searchParams) {
-        return await this.perform(`${path}/${qs.stringify(searchParams)}`)
+        return await this.perform(
+            `${path}?${queryString.stringify(searchParams)}`
+        )
     }
 
     async post(path, payload) {
-        return this.perform(path, payload, {
+        return await this.perform(path, payload, {
             method: 'POST',
         })
     }
 
     async put(path, payload) {
-        return this.perform(path, payload, {
+        return await this.perform(path, payload, {
             method: 'PUT',
         })
     }
 
     async delete(path) {
-        return this.perform(path, {
+        return await this.perform(path, {
             method: 'DELETE',
         })
     }
 }
 
-export default ApiCall(DOMAIN)
+export default new ApiCall(DOMAIN)
