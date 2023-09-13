@@ -33,16 +33,20 @@ const Header = () => {
                                         marginLeft: 10,
                                     }}
                                     value={boards?.active?.id || ''}
-                                    onChange={() => {}}
+                                    native
+                                    onChange={(event) => {
+                                        const { value } = event.target
+                                        boards.selectBoard(value)
+                                    }}
                                 >
-                                    <MenuItem value="" disabled>
+                                    <option value="" disabled>
                                         -
-                                    </MenuItem>
+                                    </option>
                                     {boards.List.map((b) => {
                                         return (
-                                            <MenuItem key={b.id} value={b?.id}>
+                                            <option key={b.id} value={b?.id}>
                                                 {b?.title}
-                                            </MenuItem>
+                                            </option>
                                         )
                                     })}
                                 </Select>
