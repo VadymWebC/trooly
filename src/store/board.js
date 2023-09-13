@@ -1,4 +1,4 @@
-import { types, flow, getParent } from 'mobx-state-tree'
+import { types, flow, getParent, onSnapshot } from 'mobx-state-tree'
 import apiCall from '../api'
 import { User } from './users'
 
@@ -24,6 +24,14 @@ const BoardSection = types
                     `boards/${boardId}/tasks/${status}`
                 )
                 self.tasks = tasks
+                onSnapshot(self, self.save)
+            }),
+            save: flow(function* ({ tasks }) {
+                const { id: boardId } = getParent(self, 2)
+                const { id: status } = self
+                yield apiCall.put(`boards/${boardId}/tasks/${status}`, {
+                    tasks,
+                })
             }),
             afterCreate() {
                 self.load()
