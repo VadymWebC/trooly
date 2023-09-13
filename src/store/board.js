@@ -23,6 +23,7 @@ const Board = types.model('Board', {
 const BoardStore = types
     .model('BoardStore', {
         boards: types.array(Board),
+        active: types.safeReference(Board),
     })
     .actions((self) => {
         return {

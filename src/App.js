@@ -2,8 +2,10 @@ import { observer } from 'mobx-react-lite'
 import useStore from './hooks/useStore'
 
 function App() {
-    const { users } = useStore()
-    console.log(users.toJSON())
+    const { users, boards } = useStore()
+    console.log('users >> ', users.toJSON())
+    console.log('boards >> ', boards.toJSON())
+    //console.log(boards.toJSON())
     return <div>Start</div>
 }
 
