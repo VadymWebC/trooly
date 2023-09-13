@@ -17,10 +17,10 @@ function Dashboard() {
     return (
         <Box p={2}>
             <DragDropContext onDragEnd={() => {}}>
-                <Grid container>
+                <Grid container spacing={3}>
                     {boards.active?.sections?.map((section) => {
                         return (
-                            <Grid item key={section.id}>
+                            <Grid item key={section.id} xs>
                                 <Paper>
                                     <Box
                                         p={1}
