@@ -60,6 +60,15 @@ const Board = types
                 const [task] = fromSection.tasks.splice(taskToMoveIndex, 1)
                 toSection.tasks.splice(destination.index, 0, task.toJSON())
             },
+            addTask(sectionId, payload) {
+                const section = self.sections.find(
+                    (section) => section.id === sectionId
+                )
+                section.push({
+                    id: 1,
+                    ...payload,
+                })
+            },
         }
     })
 

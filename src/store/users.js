@@ -15,6 +15,11 @@ const UsersStore = types
         users: types.maybe(types.array(User)),
         me: types.maybe(ActiveUser),
     })
+    .views((self) => ({
+        get List() {
+            return self.users?.map(({ id, name }) => ({ id, name }))
+        },
+    }))
     .actions((self) => {
         return {
             load: flow(function* () {

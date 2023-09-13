@@ -1,9 +1,10 @@
-import { useCallback } from 'react'
+import { useCallback, useState } from 'react'
 import { observer } from 'mobx-react-lite'
 import useStore from '../../hooks/useStore'
-import { Box, Grid, Paper, Typography } from '@material-ui/core'
+import { Box, Grid, Paper, Typography, Button } from '@material-ui/core'
 import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 import Column from './Column'
+import NewTaskDialog from './NewTaskDialog'
 
 function getListStyle(isDraggingOver) {
     return {
@@ -15,6 +16,10 @@ function getListStyle(isDraggingOver) {
 
 function Dashboard() {
     const { boards } = useStore()
+    const [newTaskToSection, setNewTaskToSection] = useState(null)
+    const closeDialog = useCallback(() => {
+        setNewTaskToSection(null)
+    }, [setNewTaskToSection])
     const onDragEnd = useCallback(
         (event) => {
             const { source, destination, draggableId: taskId } = event
@@ -34,11 +39,20 @@ function Dashboard() {
                                         p={1}
                                         display="flex"
                                         alignItems="conter"
-                                        justifyContent="center"
+                                        justifyContent="space-between"
                                     >
                                         <Typography variant="h5">
                                             {section?.title}
                                         </Typography>
+                                        <Button
+                                            variant="outlined"
+                                            color="primary"
+                                            onClick={() => {
+                                                setNewTaskToSection(section.id)
+                                            }}
+                                        >
+                                            Add
+                                        </Button>
                                     </Box>
                                     <Droppable droppableId={section.id}>
                                         {(provided, snapshot) => (
@@ -60,6 +74,10 @@ function Dashboard() {
                     })}
                 </Grid>
             </DragDropContext>
+            <NewTaskDialog
+                open={!!newTaskToSection}
+                handleClose={closeDialog}
+            />
         </Box>
     )
 }
