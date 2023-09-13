@@ -14,8 +14,8 @@ import {
 } from '@material-ui/core'
 import useStore from '../../hooks/useStore'
 
-const NewTaskDialog = ({ open, handleClose = () => {} }) => {
-    const [formState, setFormState] = useState(null)
+const NewTaskDialog = ({ open, handleClose = () => {}, activeSection }) => {
+    const [formState, setFormState] = useState({})
     const { users, boards } = useStore()
     const updateFormState = useCallback(
         (event) => {
@@ -27,10 +27,15 @@ const NewTaskDialog = ({ open, handleClose = () => {} }) => {
         },
         [setFormState]
     )
-    const addNewTask = useCallback((event) => {
-        event.preventDefault()
-        boards.active.addTask(formState)
-    }, [])
+    const addNewTask = useCallback(
+        (event) => {
+            event.preventDefault()
+            boards.active.addTask(activeSection, formState)
+            handleClose()
+            setFormState({})
+        },
+        [formState, boards, activeSection]
+    )
     return (
         <Dialog open={open} onClose={handleClose}>
             <DialogTitle>Creating a New Task</DialogTitle>
@@ -64,6 +69,7 @@ const NewTaskDialog = ({ open, handleClose = () => {} }) => {
                             <Select
                                 value={formState?.assignee || ''}
                                 native
+                                required
                                 name="assignee"
                                 onChange={updateFormState}
                             >

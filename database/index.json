@@ -159,6 +159,11 @@
     {
       "tasks": [
         {
+          "id": "f7a31df1-d406-4a22-b504-c6db87e4e94b",
+          "title": "TestTask",
+          "description": "midnightstuff"
+        },
+        {
           "id": "2",
           "title": "Task 2",
           "description": "Task some task description 3",
@@ -180,6 +185,12 @@
           "title": "Task 2",
           "description": "Task some task description 3",
           "assignee": "1"
+        },
+        {
+          "id": "24f93de3-12fc-4063-a032-5af3723d22f9",
+          "title": "Thig that is done",
+          "description": "in time",
+          "assignee": "2"
         }
       ],
       "id": "DONE"
@@ -224,6 +235,12 @@
           "id": "2",
           "title": "Task 2",
           "description": "Task some task description 3"
+        },
+        {
+          "id": "fb176b2c-253d-4eac-be29-05b4245b78c2",
+          "title": "OpenedTask5",
+          "description": "test",
+          "assignee": "10"
         }
       ],
       "id": "OPEN"

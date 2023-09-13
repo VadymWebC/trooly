@@ -1,4 +1,5 @@
 import { types, flow, getParent, onSnapshot } from 'mobx-state-tree'
+import { v4 as uuidv4 } from 'uuid'
 import apiCall from '../api'
 import { User } from './users'
 
@@ -64,8 +65,8 @@ const Board = types
                 const section = self.sections.find(
                     (section) => section.id === sectionId
                 )
-                section.push({
-                    id: 1,
+                section.tasks.push({
+                    id: uuidv4(),
                     ...payload,
                 })
             },

@@ -77,6 +77,7 @@ function Dashboard() {
             <NewTaskDialog
                 open={!!newTaskToSection}
                 handleClose={closeDialog}
+                activeSection={newTaskToSection}
             />
         </Box>
     )
