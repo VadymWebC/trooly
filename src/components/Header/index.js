@@ -11,13 +11,18 @@ import {
     Box,
 } from '@material-ui/core'
 import useStore from '../../hooks/useStore'
+import User from '../common/User'
 
 const Header = () => {
-    const { boards } = useStore()
+    const { boards, users } = useStore()
     return (
         <AppBar position="static">
             <Toolbar varianr="dense">
-                <Grid container justify="space-between" alignItems="center">
+                <Grid
+                    container
+                    justifyContent="space-between"
+                    alignItems="center"
+                >
                     <Grid item>
                         <Box display="flex" alignItems="center">
                             <Typography variant="h6">Dashboard:</Typography>
@@ -44,7 +49,9 @@ const Header = () => {
                             </FormControl>
                         </Box>
                     </Grid>
-                    <Grid item></Grid>
+                    <Grid item>
+                        <User user={users?.me} />
+                    </Grid>
                 </Grid>
             </Toolbar>
         </AppBar>

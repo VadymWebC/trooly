@@ -1,11 +1,12 @@
 import { types, flow, getParent } from 'mobx-state-tree'
 import apiCall from '../api'
+import { User } from './users'
 
 const Task = types.model('Task', {
     id: types.identifier,
     title: types.string,
     description: types.string,
-    assignee: types.string,
+    assignee: types.safeReference(User),
 })
 
 const BoardSection = types
@@ -30,11 +31,29 @@ const BoardSection = types
         }
     })
 
-const Board = types.model('Board', {
-    id: types.identifier,
-    title: types.string,
-    sections: types.array(BoardSection),
-})
+const Board = types
+    .model('Board', {
+        id: types.identifier,
+        title: types.string,
+        sections: types.array(BoardSection),
+    })
+    .actions((self) => {
+        return {
+            moveTask(id, source, destination) {
+                const fromSection = self.sections.find(
+                    (section) => section.id === source.droppableId
+                )
+                const toSection = self.sections.find(
+                    (section) => section.id === destination.droppableId
+                )
+                const taskToMoveIndex = fromSection.tasks.findIndex(
+                    (task) => task.id === id
+                )
+                const [task] = fromSection.tasks.splice(taskToMoveIndex, 1)
+                toSection.tasks.splice(destination.index, 0, task.toJSON())
+            },
+        }
+    })
 
 const BoardStore = types
     .model('BoardStore', {

@@ -1,3 +1,4 @@
+import { useCallback } from 'react'
 import { observer } from 'mobx-react-lite'
 import useStore from '../../hooks/useStore'
 import { Box, Grid, Paper, Typography } from '@material-ui/core'
@@ -14,9 +15,16 @@ function getListStyle(isDraggingOver) {
 
 function Dashboard() {
     const { boards } = useStore()
+    const onDragEnd = useCallback(
+        (event) => {
+            const { source, destination, draggableId: taskId } = event
+            boards.active.moveTask(taskId, source, destination)
+        },
+        [boards]
+    )
     return (
         <Box p={2}>
-            <DragDropContext onDragEnd={() => {}}>
+            <DragDropContext onDragEnd={onDragEnd}>
                 <Grid container spacing={3}>
                     {boards.active?.sections?.map((section) => {
                         return (
